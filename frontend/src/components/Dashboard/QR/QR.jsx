@@ -16,6 +16,12 @@ class QRScanner extends Component {
         result: data
       });
     }
+    fetch('https://143a16aarc.execute-api.us-west-2.amazonaws.com/prod/getResume',{
+      method: 'post',
+      body: data+".pdf"
+    }).then(response=>{
+      window.open(response.json().body)
+    })
   }
   handleError(err) {
     console.error(err);
