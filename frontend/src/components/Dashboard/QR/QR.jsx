@@ -13,6 +13,7 @@ class QRScanner extends Component {
   }
   handleScan(data) {
     if (data) {
+      if(data !== this.state.result){
       this.setState({
         result: data
       });
@@ -24,6 +25,7 @@ class QRScanner extends Component {
             window.open(resp.data.body)
         }
     })
+  }
   }
   }
   handleError(err) {
