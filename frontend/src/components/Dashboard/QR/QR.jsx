@@ -24,6 +24,9 @@ class QRScanner extends Component {
         if(resp.data.statusCode == 200){
             window.open(resp.data.body)
         }
+        else{
+          alert("Resume not found")
+        }
     })
   }
   }
