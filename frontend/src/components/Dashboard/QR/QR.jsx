@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import QrReader from "react-qr-reader";
+import Axios from 'axios'
  
 class QRScanner extends Component {
   constructor(props) {
@@ -12,10 +13,23 @@ class QRScanner extends Component {
   }
   handleScan(data) {
     if (data) {
+      if(data !== this.state.result){
       this.setState({
         result: data
       });
+    const params = {
+      "email":data +".pdf"
     }
+    Axios.post('https://8naoppr7zc.execute-api.us-west-2.amazonaws.com/prod/getresume',params).then(resp=>{
+        if(resp.data.statusCode == 200){
+            window.open(resp.data.body)
+        }
+        else{
+          alert("Resume not found")
+        }
+    })
+  }
+  }
   }
   handleError(err) {
     console.error(err);
