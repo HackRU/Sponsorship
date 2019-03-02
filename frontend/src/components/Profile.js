@@ -324,7 +324,7 @@ class Profile {
         } else {
             request({
                 method: "POST",
-                uri: (magic.startsWith('forgot-'))? ENDPOINTS.resetpassword : ENPOINTS.signup,
+                uri: (magic.startsWith('forgot-'))? ENDPOINTS.resetpassword : ENDPOINTS.signup,
                 body: {
                     email: email,
                     forgot: true,
