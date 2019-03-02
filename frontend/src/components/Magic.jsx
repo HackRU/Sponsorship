@@ -12,7 +12,7 @@ import LoginPage from "./Login";
 class MagicPage extends Component {
     constructor(props) {
         super(props);
-        this.renderForgot = this.renderForgot.bind(this);
+        this.renderLink = this.renderLink.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
     }
     componentWillMount() {
@@ -27,17 +27,14 @@ class MagicPage extends Component {
      */
     render() {
         let mlurl = this.props.match.params.mlurl;
-        if (mlurl.includes("forgot-")) {
-            return this.renderForgot();
-        } else {
-            return this.renderLogin();
-        }
+        return this.renderLink(mlurl.includes("forgot-"));
     }
     /**
      * Forgot Password
      */
-    renderForgot() {
+    renderLink(isForgot) {
         let innerText = "Change your password";
+        if(!isForgot) innerText = "Join HackRU";
         let innerForm = (
             <div>
                 <FormGroup row>
@@ -67,6 +64,7 @@ class MagicPage extends Component {
         if (this.state.done) {
             innerForm = <FormText><Link to="/login" style={{ color: "rgba(255, 255, 255, 0.5)" }}>Login</Link></FormText>;
             innerText = "Password changed!";
+            if(!isForgot) innerText = "Welcome to HackRU!";
         }
         let errors = null;
         if (this.state.errors !== "") {
@@ -128,6 +126,7 @@ class MagicPage extends Component {
             );
         }
     }
+
     /**
      * Render login component
      */
