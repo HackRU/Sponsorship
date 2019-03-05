@@ -4,7 +4,7 @@ import { theme } from "../Defaults";
 import { Icon } from "react-fa";
 import { Link } from "react-router-dom";
 import { RingLoader } from "react-spinners";
-import LoginPage from "./Login";
+import SignUpPage from "./Signup"
 
 /**
  * Magic link handler component
@@ -72,7 +72,7 @@ class MagicPage extends Component {
         }
         let contents = (
             <div style={{ padding: 30 }}>
-                <h1 className="display-1 theme-font">Reset</h1>
+                <h1 className="display-1 theme-font">Hello!</h1>
                 <p className="lead">{innerText}</p>
                 <Form onSubmit={(e) => {
                     e.preventDefault();
@@ -131,7 +131,7 @@ class MagicPage extends Component {
      * Render login component
      */
     renderLogin() {
-        return <LoginPage {...this.props} />
+        return <SignUpPage {...this.props} />
     }
 }
 

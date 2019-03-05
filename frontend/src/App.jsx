@@ -1,6 +1,6 @@
 import React, { Component } from "react"; // Default react imports for the component
 import { BrowserRouter, Route, Switch, Redirect} from "react-router-dom"; // React router components
-import { SponsorshipPage, E404, LoginPage, ForgotPage, MagicPage, DashboardPage } from "./components/Pages"; // Router Pages
+import { SponsorshipPage, E404, LoginPage, ForgotPage, MagicPage, DashboardPage, SignUpPage } from "./components/Pages"; // Router Pages
 import MLHBadge from "./MLHBadge"; // We need this to qualify as an official MLH event
 import { defaults } from "./Defaults"; // Get a handle to the default application settings
 import { Profile } from "./components/Profile";
@@ -55,8 +55,9 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" render={(props) => <SponsorshipPage {...props} {...componentProps} />} />
                         <Route exact path="/login" render={(props) => <LoginPage {...props} {...componentProps} />} />
+                        <Route exact path="/signup" render={(props) => <SignUpPage {...props} {...componentProps} />} />
                         <Route exact path="/forgot" render={(props) => <ForgotPage {...props} {...componentProps} />} />
-                        <Route exact path="/magic" render={(props) => <MagicPage {...props} {...componentProps} />} />
+                        <Route exact path="/magic/:mlurl" render={(props) => <MagicPage {...props} {...componentProps} />} />
                         <Route exact path="/dashboard" render={(props) => <DashboardPage {...props} {...componentProps} />} />
                         <Route exact path="/logout" component={() => { this.state.profile.Logout(); this.setState({ profile: this.state.profile, loggedout: true }); return (<Redirect to="/" />); }} />
                         <Route component={E404} />

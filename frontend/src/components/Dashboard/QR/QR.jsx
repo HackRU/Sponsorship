@@ -21,7 +21,7 @@ class QRScanner extends Component {
       "email":data +".pdf"
     }
     Axios.post('https://8naoppr7zc.execute-api.us-west-2.amazonaws.com/prod/getresume',params).then(resp=>{
-        if(resp.data.statusCode == 200){
+        if(resp.data.statusCode === 200){
             window.open(resp.data.body)
         }
         else{
