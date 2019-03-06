@@ -379,8 +379,12 @@ class Profile {
                     callback("An error occured while digesting the magic link");
                 } else {
                     if (body.errorMessage) {
+                        console.log("Magic link error")
+                        console.log(body)
                         callback(body.errorMessage);
                     } else if (body.statusCode === 200) {
+                        console.log("Magic link good")
+                        console.log(body)
                         callback();
                     } else {
                         callback((body.body) ? (body.body) : ("Unexpected Error"));
