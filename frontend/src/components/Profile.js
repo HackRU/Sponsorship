@@ -2,6 +2,9 @@ import cookie from "react-cookies";
 import request from "request";
 import { defaults } from "../Defaults";
 
+/**
+ * Configure the all of the urls that we will need to access the rest api
+ */
 const BASE = ((process.env.NODE_ENV && process.env.NODE_ENV === "development") || window.location.origin.includes("dev.hackru.org")) ? (defaults.rest.dev) : (defaults.rest.prod);
 const ENDPOINTS = {
     /**
@@ -60,6 +63,14 @@ const ENDPOINTS = {
      * Reset password from magic link to reset password
      */
     "resetpassword": BASE + "/consume",
+    /**
+     * Digest magic links
+     */
+    "magic": BASE + "/consume",
+    /**
+     * Get QR codes
+     */
+    "qr": BASE + "/qr",
 }
 /**
  * Standard profile handler for the entire application
@@ -70,11 +81,10 @@ class Profile {
         this.Logout = this.Logout.bind(this);
         this.SignUp = this.SignUp.bind(this);
         this._login = this._login.bind(this);
-        this._token = cookie.load("token");
-        this._email = cookie.load("email");
-        this._valid_until = Date.parse(cookie.load("valid_until"));
+        this._token = cookie.load("token", { path: "/" });
+        this._email = cookie.load("email", { path: "/" });
+        this._valid_until = Date.parse(cookie.load("valid_until", { path: "/" }));
         if (this._token && this._email && this._valid_until && this._valid_until > Date.now()) {
-            
             this.isLoggedIn = true;
         } else {
             this.isLoggedIn = false;
@@ -156,6 +166,7 @@ class Profile {
                     body: {
                         email: email,
                         password: password,
+                        role: 'sponsor',
                         registration_status: "unregistered" //"waitlist" is one of them
                     },
                     json: true
@@ -219,6 +230,7 @@ class Profile {
         cookie.remove("token");
         cookie.remove("email");
         cookie.remove("valid_until");
+        cookie.remove("magic");
         this._token = null;
         this._email = null;
         this._valid_until = null;
@@ -324,7 +336,7 @@ class Profile {
         } else {
             request({
                 method: "POST",
-                uri: (magic.startsWith('forgot-'))? ENDPOINTS.resetpassword : ENDPOINTS.signup,
+                uri: ENDPOINTS.resetpassword,
                 body: {
                     email: email,
                     forgot: true,
@@ -347,5 +359,60 @@ class Profile {
             });
         }
     }
+    Eat(magic, callback) {
+        if (!magic) {
+            callback("Input a valid magic link");
+        } else if (!this.isLoggedIn) {
+            callback("User needs to be logged in");
+        } else {
+            request({
+                method: "POST",
+                uri: ENDPOINTS.magic,
+                body: {
+                    email: this._email,
+                    link: magic,
+                    token: this._token
+                },
+                json: true
+            }, (error, response, body) => {
+                if (error) {
+                    callback("An error occured while digesting the magic link");
+                } else {
+                    if (body.errorMessage) {
+                        callback(body.errorMessage);
+                    } else if (body.statusCode === 200) {
+                        callback();
+                    } else {
+                        callback((body.body) ? (body.body) : ("Unexpected Error"));
+                    }
+                }
+            });
+        }
+    }
+    ClearMagic() {
+        cookie.remove("magic", { path: "/" });
+    }
+    SetMagic(magic) {
+        cookie.save("magic", magic, { path: "/" });
+    }
+    GetMagic() {
+        return cookie.load("magic", { path: "/" });
+    }
+    GetQR(callback) {
+        request({
+            method: "POST",
+            uri: ENDPOINTS.qr,
+            body: {
+                email: this._email,
+                'background': [0xff, 0xff, 0xff],
+                'color': [0x00, 0x00, 0x00],
+                'transparentBackground': true,
+            },
+            json: true
+        }, (error, response, body) => {
+            callback(error, body);
+        });
+    }
 }
+
 export { Profile };

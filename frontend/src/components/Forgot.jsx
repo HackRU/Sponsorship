@@ -5,6 +5,9 @@ import { Icon } from "react-fa";
 import { Link } from "react-router-dom";
 import { RingLoader } from "react-spinners";
 
+/**
+ * Forgot my password application for "/forgot"
+ */
 class ForgotPage extends Component {
     componentWillMount() {
         this.setState({

@@ -4,18 +4,19 @@ import { theme } from "../Defaults";
 import { Icon } from "react-fa";
 import { Link } from "react-router-dom";
 import { RingLoader } from "react-spinners";
-import SignUpPage from "./Signup"
-
+import { Redirect } from "react-router-dom";
 /**
  * Magic link handler component
  */
 class MagicPage extends Component {
     constructor(props) {
         super(props);
-        this.renderLink = this.renderLink.bind(this);
+        this.renderForgot = this.renderForgot.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
     }
     componentWillMount() {
+        let mlurl = this.props.match.params.mlurl;
+        this.props.setMagic(mlurl);
         this.setState({
             loading: false,
             done: false,
@@ -27,14 +28,17 @@ class MagicPage extends Component {
      */
     render() {
         let mlurl = this.props.match.params.mlurl;
-        return this.renderLink(mlurl.includes("forgot-"));
+        if (mlurl.includes("forgot-")) {
+            return this.renderForgot();
+        } else {
+            return this.renderLogin();
+        }
     }
     /**
      * Forgot Password
      */
-    renderLink(isForgot) {
+    renderForgot() {
         let innerText = "Change your password";
-        if(!isForgot) innerText = "Join HackRU";
         let innerForm = (
             <div>
                 <FormGroup row>
@@ -64,7 +68,6 @@ class MagicPage extends Component {
         if (this.state.done) {
             innerForm = <FormText><Link to="/login" style={{ color: "rgba(255, 255, 255, 0.5)" }}>Login</Link></FormText>;
             innerText = "Password changed!";
-            if(!isForgot) innerText = "Welcome to HackRU!";
         }
         let errors = null;
         if (this.state.errors !== "") {
@@ -72,7 +75,7 @@ class MagicPage extends Component {
         }
         let contents = (
             <div style={{ padding: 30 }}>
-                <h1 className="display-1 theme-font">Hello!</h1>
+                <h1 className="display-1 theme-font">Reset</h1>
                 <p className="lead">{innerText}</p>
                 <Form onSubmit={(e) => {
                     e.preventDefault();
@@ -126,12 +129,11 @@ class MagicPage extends Component {
             );
         }
     }
-
     /**
      * Render login component
      */
     renderLogin() {
-        return <SignUpPage {...this.props} />
+        return <Redirect to="/login" />
     }
 }
 

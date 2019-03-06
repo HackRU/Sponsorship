@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { RingLoader } from "react-spinners";
 import { Redirect } from "react-router-dom";
 
+/**
+ * Login application for "/login"
+ */
 class LoginPage extends Component {
     componentWillMount() {
         this.setState({
@@ -80,6 +83,7 @@ class LoginPage extends Component {
                 }}>
                     {errors}
                     {innerForm}
+                    <FormText><Link to="/signup" style={{ color: "rgba(255, 255, 255, 0.5)" }}>Not a member? Create an Account!</Link></FormText>
                     <FormText><Link to="/forgot" style={{ color: "rgba(255, 255, 255, 0.5)" }}>Forgot your password?</Link></FormText>
                     <FormText><Link to="/" style={{ color: "rgba(255, 255, 255, 0.5)" }}>Return Home</Link></FormText>
                 </Form>
@@ -106,4 +110,5 @@ class LoginPage extends Component {
         }
     }
 }
+
 export default LoginPage;

@@ -19,6 +19,23 @@ class Dashboard extends Component {
         profileMSG: null
     }
     componentWillMount() {
+
+        if (this.props.magic) {
+            this.props.profile.Eat(this.props.magic, (msg) => {
+                if (msg) {
+                    console.error(msg);
+                    this.setState({
+                        profileMSG: { color: "warning", value: msg }
+                    });
+                } else {
+                    this.setState({
+                        profileMSG: { color: "info", value: "Magic link applied!" }
+                    });
+                }
+                this.props.clearMagic();
+            });
+        }
+
         this.props.profile.Get((msg, data) => {
             if (msg) {
                 console.error(msg);
@@ -108,7 +125,9 @@ class Dashboard extends Component {
                     <div style={{ zIndex: 3, color: "white", width: "100%" }} align="center">
                         <Container>
                             <div style={{ width: "100%", textAlign: "left", marginBottom: 0, paddingTop: 35 }}>
+                                <ProfileMessage message={this.state.profileMSG} />
                                <h1>This account is not associated with a sponsor.  Please login at <a href="https://hackru.org/">hackru.org</a></h1>
+                               <h2> If this is a mistake, please contact your Sponsorship Representative</h2>
                             </div>
                             <div style={{ display: "inline-block", marginRight: 20 }}><p className="lead"><Link to="/logout" className="theme-home-link" style={{ color: theme.accent[0] + "ff", textDecoration: "none" }}>Logout</Link></p></div>
                             
