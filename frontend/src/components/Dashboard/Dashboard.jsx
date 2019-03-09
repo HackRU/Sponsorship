@@ -31,6 +31,22 @@ class Dashboard extends Component {
                     this.setState({
                         profileMSG: { color: "info", value: "Magic link applied!" }
                     });
+                    this.props.profile.Get((msg, data) => {
+                        if (msg) {
+                            console.error(msg);
+                        } else {
+                            console.log(data);
+                            if (data) {
+                                delete data.auth;
+                                delete data.day_of;
+                                this.setState({
+                                    user: data,
+                                    loading: false,
+                                    openDetails: (data.registration_status === "unregistered")
+                                });
+                            }
+                        }
+                    });
                 }
                 this.props.clearMagic();
             });

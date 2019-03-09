@@ -133,7 +133,7 @@ class MagicPage extends Component {
      * Render login component
      */
     renderLogin() {
-        return <Redirect to="/login" />
+        return <Redirect to="/signup" />
     }
 }
 
