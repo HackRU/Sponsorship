@@ -33,7 +33,7 @@ class Main extends Component {
                             <div style={{flex: 33.33}}><img width="250" src="./assets/icons/hru-logo-small-green.png" alt="logo"></img></div>
                             <div style={{flex: 33.33}}><LogoAnim className="disappear" src="./assets/icons/assetsSVG/whitegriffinassetleft.svg" /></div>
                         </div>
-                            <h2 style={{ marginTop: 20 }} className="display-4 theme-font">Sponsor HackRU Spring 2019</h2>
+                            <h2 style={{ marginTop: 20 }} className="display-4 theme-font">Sponsor HackRU</h2>
                             <h2 className="lead theme-font"><Icon style={{ marginRight: 5 }} name="map-marker" /> {defaults.locationText}</h2>
                             <h2 className="lead theme-font"><Icon style={{ marginRight: 5 }} name="calendar" /> {defaults.dateText}</h2>
                         </Col>
@@ -56,7 +56,7 @@ class Main extends Component {
                         <div className="row" style={{display:"flex"}}>
                             <div style={{flex: 33.33}}><img width="300" src="./assets/icons/hru-logo-small-green.png" alt="logo"></img></div>
                         </div>
-                            <h2 style={{ marginTop: -10 }} className="display-5 theme-font">Sponsor HackRU Spring 2019</h2>
+                            <h2 style={{ marginTop: -10 }} className="display-5 theme-font">Sponsor HackRU</h2>
                             <h2 style={{ marginTop: 25 }} className="lead theme-font"><Icon style={{ marginRight: 5 }} name="map-marker" /> {defaults.locationText}</h2>
                             <h2 style={{ marginTop: 5, marginBottom: 25 }} className="lead theme-font"><Icon style={{ marginRight: 5 }} name="calendar" /> {defaults.dateText}</h2>
                             <hr style={{ backgroundColor: "rgba(255, 255, 255, 0.25)", width: "100px" }} />

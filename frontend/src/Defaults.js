@@ -6,8 +6,8 @@ import Recap from "./components/Sponsorship/Sections/Recap";
 import Footer from "./components/Sponsorship/Sections/Footer";
 
 const defaults =  {
-    "title": "HackRU Spring 2019",
-    "dateText": "March 9th-10th",
+    "title": "HackRU Sponsorship",
+    "dateText": "Fall 2019",
     "locationText": "College Avenue Student Center",
     "universityText": "Rutgers University",
     "mobileWidthThresholdSensitive": 1500,
